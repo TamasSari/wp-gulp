@@ -3,6 +3,7 @@ var gulp = require('gulp'),
     jade = require('gulp-jade-php'),
     autoprefixer = require('gulp-autoprefixer'),
     minifycss = require('gulp-minify-css'),
+    sftp = require('gulp-sftp'),
     livereload = require('gulp-livereload'),
     lr = require('tiny-lr'),
     server = lr();
@@ -23,6 +24,17 @@ gulp.task('jade', function() {
     .pipe(jade())
     .pipe(gulp.dest('./'));
 });
+
+// SFTP Deploy
+gulp.task('sftp', function () {
+  return gulp.src('src/*')
+    .pipe(sftp({
+      host: 'heydesigner.com',
+      remotePath: 'domains/heydesigner.org/html/',
+      auth: 'keyMain'
+    }));
+});
+
 
 // Watch
 gulp.task('watch', function () {
